@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+     <head>
+          <link rel="stylesheet" type="text/css" href="css3.css"/>
+          <script type="text/javascript">
+		      
+			    //global variables
+				
+				var filled;
+				var shape;
+				var winningcombo;
+			    var turn=0;
+				var canvasid;
+			    var c;
+		        var cxt;
+				var squares=0;
+				var w;
+			
+				
+				//Instantiate arrays
+				
+				window.onload=function(){
+					
+				     filled=new Array();	
+					 shape=new Array();
+					 
+					   //All possible combinations in which a player can win...
+					 
+				     winningcombo=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+					 
+					 for(var i=0;i<=8;++i){
+						   
+						  filled[i]=false;
+						  shape[i]='';
+						 
+					 }
+				
+				}
+				
+				//Game functions
+				
+				function canvasClicked(canvasNumber){
+				   	
+					 canvasid="canvas"+canvasNumber;
+					 c=document.getElementById(canvasid);
+					 cxt=c.getContext("2d");
+					
+					 if(filled[canvasNumber-1]==false){
+					
+		                    if(turn%2==0){    //Player 1 
+		
+		                cxt.beginPath();
+								 cxt.moveTo(10,10);
+								 cxt.lineTo(40,40);
+		                         cxt.moveTo(40,10);
+								 cxt.lineTo(10,40);
+								 cxt.stroke();
+								 cxt.closePath();
+								 shape[canvasNumber-1]='X';
+							}
+							else{                       //Player 2
+								   
+							  	 cxt.beginPath();
+								 cxt.arc(25,25,20,0,Math.PI*2,true);
+								 cxt.stroke(); 
+								 cxt.closePath();
+								 
+								 shape[canvasNumber-1]='O';
+								   
+							}
+							
+							turn++;
+							filled[canvasNumber-1]=true;
+							squares++; 
+							checkForWinners(shape[canvasNumber-1]);
+				            if(squares===9){
+								
+							    alert("The Game is Over!!");
+								location.reload(true);	
+											
+							}
+					 }
+					 
+					 else{
+					     
+						  alert("Hey hotshot,that space is already is filled!!");						 
+					 }
+		
+		
+		
+				}
+				
+				function checkForWinners(symbol){
+					
+				      for(var i=0;i<winningcombo.length;i++){
+						   if(shape[winningcombo[i][0]]==symbol && shape[winningcombo[i][1]]==symbol && shape[winningcombo[i][2]]==symbol){
+							   
+							    alert(symbol+"WON this game!");
+								playAgain();
+							     
+						   }
+					
+					  }
+				
+				}
+				
+				function playAgain(){
+					
+				     ans=confirm("Wanna play again,hotshot??");
+					if(ans==true){
+						 
+					  	 alert("Wait for a sec hotshot");
+						  location.reload(true);	
+					
+					}
+				    else{
+						
+					    alert("Gud bye,hotshot!!");	
+					}
+				}
+		  </script>
+     
+     </head>
+     
+     
+     <body>
+          <div id="box">
+             <h1>Tic-Tac-Toe</h1>
+             <h2>My very first javascript game</h2>
+             <h3>Yippe</h3>       
+             
+             //Make tic-tac-toe boxes using canvas which is extra feature in HTML5
+          
+             <canvas id="canvas1" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(1)"></canvas>
+          
+             <canvas id="canvas2" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(2)"></canvas>
+          
+             <canvas id="canvas3" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(3)"></canvas><br/>
+          
+             <canvas id="canvas4" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(4)"></canvas>
+          
+             <canvas id="canvas5" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(5)"></canvas>
+          
+             <canvas id="canvas6" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(6)"></canvas>
+    <br/>      
+             <canvas id="canvas7" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(7)"></canvas>
+          
+             <canvas id="canvas8" width="50" height="50" style="border:1px solid black" onClick="canvasClicked(8)"></canvas>
+          
+             <canvas id="canvas9" width="50" height="50" style="border:1px solid black" onclick="canvasClicked(9)"></canvas>
+      </div>       
+  
+     </body>
+     
+</html>
